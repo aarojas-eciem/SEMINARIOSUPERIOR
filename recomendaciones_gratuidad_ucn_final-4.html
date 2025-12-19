@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendaciones - Política de Gratuidad UCN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(135deg, #1a1f3a 0%, #2d3561 100%);
+            color: #e8e9ed;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(20, 24, 44, 0.95);
+            padding: 2rem 3rem;
+            border-bottom: 2px solid #4a5578;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #a8b2d1;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            max-width: 1400px;
+        }
+
+        .meta-info {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.95rem;
+            color: #8892b0;
+            margin-top: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-label {
+            font-weight: 600;
+            color: #64ffda;
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 180px);
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .sidebar {
+            width: 30%;
+            background: rgba(30, 35, 58, 0.9);
+            padding: 2rem;
+            overflow-y: auto;
+            border-right: 2px solid #4a5578;
+        }
+
+        .sidebar h2 {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.5rem;
+            color: #64ffda;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .nav-item {
+            background: rgba(42, 48, 76, 0.6);
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(52, 58, 86, 0.8);
+            border-left-color: #64ffda;
+            transform: translateX(4px);
+        }
+
+        .nav-item.active {
+            background: rgba(100, 255, 218, 0.1);
+            border-left-color: #64ffda;
+        }
+
+        .nav-number {
+            font-size: 0.8rem;
+            color: #64ffda;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-title {
+            font-size: 1rem;
+            color: #ccd6f6;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .content {
+            width: 70%;
+            padding: 3rem;
+            overflow-y: auto;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content h3 {
+            font-family: 'Crimson Text', serif;
+            font-size: 2rem;
+            color: #64ffda;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .recommendation-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #ccd6f6;
+            margin-bottom: 2rem;
+            text-align: justify;
+        }
+
+        .recommendation-text p {
+            margin-bottom: 1.2rem;
+        }
+
+        .evidence-box {
+            background: rgba(42, 48, 76, 0.5);
+            border-left: 4px solid #64ffda;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+
+        .evidence-title {
+            font-size: 0.9rem;
+            color: #64ffda;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .evidence-item {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .evidence-item:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #64ffda;
+        }
+
+        .stat {
+            display: inline-block;
+            background: rgba(100, 255, 218, 0.15);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #64ffda;
+            cursor: help;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .stat:hover {
+            background: rgba(100, 255, 218, 0.25);
+        }
+
+        .tooltip {
+            visibility: hidden;
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(20, 24, 44, 0.98);
+            color: #e8e9ed;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            width: 280px;
+            z-index: 1000;
+            border: 1px solid #64ffda;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            line-height: 1.5;
+        }
+
+        .stat:hover .tooltip {
+            visibility: visible;
+        }
+
+        .limitation-badge {
+            display: inline-block;
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff9999;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .evidence-level {
+            display: inline-block;
+            background: rgba(100, 255, 218, 0.2);
+            color: #64ffda;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .timeline-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-badge.corto {
+            background: rgba(100, 255, 218, 0.2);
+            color: #64ffda;
+        }
+
+        .timeline-badge.mediano {
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+        }
+
+        .timeline-badge.largo {
+            background: rgba(255, 153, 102, 0.2);
+            color: #ff9966;
+        }
+
+        .intro-section {
+            background: rgba(42, 48, 76, 0.4);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #64ffda;
+        }
+
+        .intro-section p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(30, 35, 58, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4a5578;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64ffda;
+        }
+
+        .hypothesis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .hypothesis-card {
+            background: rgba(42, 48, 76, 0.5);
+            border-radius: 8px;
+            padding: 2rem;
+            border-left: 4px solid;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .hypothesis-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+
+        .hypothesis-card.confirmed {
+            border-left-color: #ffd700;
+        }
+
+        .hypothesis-card.rejected-neutral {
+            border-left-color: #64a8ff;
+        }
+
+        .hypothesis-card.rejected-positive {
+            border-left-color: #64ffda;
+        }
+
+        .hypothesis-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .hypothesis-title {
+            font-size: 0.85rem;
+            color: #8892b0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+        }
+
+        .hypothesis-statement {
+            font-size: 1.05rem;
+            color: #ccd6f6;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .hypothesis-result {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hypothesis-result.confirmed {
+            background: rgba(255, 215, 0, 0.15);
+            color: #ffd700;
+        }
+
+        .hypothesis-result.rejected {
+            background: rgba(100, 168, 255, 0.15);
+            color: #64a8ff;
+        }
+
+        .hypothesis-result.rejected-positive {
+            background: rgba(100, 255, 218, 0.15);
+            color: #64ffda;
+        }
+
+        .hypothesis-icon {
+            font-size: 1.1rem;
+        }
+
+        .findings-section {
+            margin: 1.5rem 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(138, 146, 176, 0.2);
+        }
+
+        .findings-label {
+            font-size: 0.8rem;
+            color: #8892b0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .finding-item {
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            color: #a8b2d1;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .finding-item:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: inherit;
+            font-weight: 700;
+        }
+
+        .finding-stat {
+            font-weight: 700;
+            color: #64ffda;
+        }
+
+        .recommendations-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(138, 146, 176, 0.2);
+        }
+
+        .recommendations-label {
+            font-size: 0.8rem;
+            color: #8892b0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .arrow-down {
+            font-size: 1.2rem;
+            color: #64ffda;
+        }
+
+        .rec-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: rgba(100, 255, 218, 0.05);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 2px solid transparent;
+            font-size: 0.9rem;
+            color: #a8b2d1;
+        }
+
+        .rec-link:hover {
+            background: rgba(100, 255, 218, 0.15);
+            border-left-color: #64ffda;
+            transform: translateX(4px);
+            color: #ccd6f6;
+        }
+
+        .rec-arrow {
+            color: #64ffda;
+            font-weight: 700;
+        }
+
+        .magnitude-bar {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(30, 35, 58, 0.6);
+            border-radius: 6px;
+        }
+
+        .magnitude-label {
+            font-size: 0.75rem;
+            color: #8892b0;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bar-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(138, 146, 176, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+
+        .bar-fill.negative {
+            background: linear-gradient(90deg, #ffd700 0%, #ff9966 100%);
+        }
+
+        .bar-fill.positive {
+            background: linear-gradient(90deg, #64ffda 0%, #66ff99 100%);
+        }
+
+        .bar-fill.neutral {
+            background: linear-gradient(90deg, #64a8ff 0%, #8892b0 100%);
+        }
+
+        .magnitude-value {
+            font-size: 0.85rem;
+            color: #ccd6f6;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        .model-section {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: rgba(20, 24, 44, 0.6);
+            border-radius: 6px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+        }
+
+        .model-label {
+            font-size: 0.8rem;
+            color: #64ffda;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .equation {
+            font-family: 'Crimson Text', serif;
+            font-size: 0.9rem;
+            color: #e8e9ed;
+            line-height: 2;
+            padding: 0.75rem;
+            background: rgba(30, 35, 58, 0.8);
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .equation-number {
+            color: #8892b0;
+            font-size: 0.85rem;
+            margin-left: 1rem;
+        }
+
+        .method-tag {
+            display: inline-block;
+            background: rgba(100, 168, 255, 0.15);
+            color: #64a8ff;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .sidebar, .content {
+                width: 100%;
+            }
+
+            .sidebar {
+                border-right: none;
+                border-bottom: 2px solid #4a5578;
+            }
+
+            .hypothesis-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Evaluación del efecto de la política de gratuidad, implementada en 2016, sobre el desempeño académico de los estudiantes de pregrado de la Universidad Católica del Norte en el período 2010–2024</h1>
+        <div class="meta-info">
+            <div class="meta-item">
+                <span class="meta-label">Autores:</span>
+                <span>Natalia Araya Plaza · Alberto Rojas Castro</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Institución:</span>
+                <span>Escuela de Ciencias Empresariales UCN</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>Recomendaciones</h2>
+            <div class="nav-item active" data-section="intro">
+                <div class="nav-number">CONTEXTO</div>
+                <div class="nav-title">Marco general de recomendaciones</div>
+            </div>
+            <div class="nav-item" data-section="mapa">
+                <div class="nav-number">MAPA DE HALLAZGOS</div>
+                <div class="nav-title">Del resultado a la acción</div>
+            </div>
+            <div class="nav-item" data-section="r1">
+                <div class="nav-number">RECOMENDACIÓN 1</div>
+                <div class="nav-title">Monitorear eficiencia de trayectorias</div>
+            </div>
+            <div class="nav-item" data-section="r2">
+                <div class="nav-number">RECOMENDACIÓN 2</div>
+                <div class="nav-title">Profundizar en mecanismos causales</div>
+            </div>
+            <div class="nav-item" data-section="r3">
+                <div class="nav-number">RECOMENDACIÓN 3</div>
+                <div class="nav-title">Comprender heterogeneidad territorial</div>
+            </div>
+            <div class="nav-item" data-section="r4">
+                <div class="nav-number">RECOMENDACIÓN 4</div>
+                <div class="nav-title">Considerar heterogeneidad disciplinar y demográfica</div>
+            </div>
+            <div class="nav-item" data-section="final">
+                <div class="nav-number">CIERRE</div>
+                <div class="nav-title">Consideraciones finales</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Intro Section -->
+            <div class="content-section active" id="intro">
+                <h3>Marco general de recomendaciones</h3>
+                <div class="intro-section">
+                    <p>La evidencia empírica obtenida en esta investigación identifica asociaciones robustas entre la política de gratuidad y distintas dimensiones del desempeño académico en la Universidad Católica del Norte. Los métodos cuasi-experimentales empleados permiten cuantificar la magnitud de estas asociaciones con rigor metodológico, estableciendo que los beneficiarios presentan menor rendimiento semestral en contextos institucionales específicos, que mantienen tasas de titulación oportuna equivalentes a los no beneficiarios, y que exhiben mayor probabilidad de permanencia en la institución.</p>
+                    
+                    <p>Sin embargo, estos métodos no permiten identificar los mecanismos causales subyacentes que explican por qué emergen estos patrones. Las siguientes recomendaciones se dirigen a la Dirección General de Pregrado de la UCN como orientaciones para la gestión académica y la investigación institucional futura, reconociendo explícitamente los límites de lo que la evidencia disponible permite afirmar con certeza.</p>
+                </div>
+
+                <div class="evidence-box">
+                    <div class="evidence-title">Hallazgos principales</div>
+                    <div class="evidence-item">
+                        <span class="evidence-level">Evidencia robusta</span>
+                        Rendimiento semestral: reducción de <span class="stat">-1.2pp<span class="tooltip">System GMM estima una reducción promedio de 1.2 puntos porcentuales en la tasa de aprobación de créditos, controlando por dinámica del desempeño y heterogeneidad individual.</span></span> (GMM) y entre <span class="stat">-13.3pp a -16.5pp<span class="tooltip">Diferencias en Diferencias identifica efectos negativos en períodos específicos (t=1, 3, 4, 6), bajo supuesto de tendencias paralelas.</span></span> en períodos específicos (DiD)
+                    </div>
+                    <div class="evidence-item">
+                        <span class="evidence-level">Evidencia robusta</span>
+                        Retención: incremento de <span class="stat">+5.81pp<span class="tooltip">Modelo Probit Ordinal. Constituye el determinante de mayor magnitud sobre permanencia universitaria, superando el efecto del PPA (1.04pp) y progreso curricular (0.44pp).</span></span> en probabilidad de permanencia
+                    </div>
+                    <div class="evidence-item">
+                        <span class="evidence-level">Equivalencia práctica</span>
+                        Titulación oportuna: <span class="stat">77.9% vs 78.5%<span class="tooltip">No se detectan diferencias significativas (p=0.669, h de Cohen=-0.015). La ventana institucional absorbe las diferencias en tiempo promedio.</span></span> (beneficiarios vs no beneficiarios)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mapa de Hallazgos -->
+            <div class="content-section" id="mapa">
+                <h3>Mapa de Hallazgos: Del Resultado a la Acción</h3>
+                
+                <div class="intro-section">
+                    <p>Esta sección integra los tres objetivos específicos de la investigación, vinculando cada hipótesis con su resultado empírico y las recomendaciones que se derivan de los hallazgos. La triangulación metodológica permite establecer un marco coherente para la toma de decisiones institucionales basadas en evidencia.</p>
+                </div>
+
+                <div class="hypothesis-grid">
+                    <!-- Card OE1 -->
+                    <div class="hypothesis-card confirmed">
+                        <div class="hypothesis-header">
+                            <div class="hypothesis-title">OE1: Rendimiento Académico Semestral</div>
+                            <div class="hypothesis-statement">H1: Los beneficiarios presentan menor rendimiento semestral que los no beneficiarios</div>
+                            <div class="hypothesis-result confirmed">
+                                <span class="hypothesis-icon">⚠</span>
+                                <span>CONFIRMADA</span>
+                            </div>
+                        </div>
+
+                        <div class="findings-section">
+                            <div class="findings-label">Hallazgos clave</div>
+                            <div class="finding-item">
+                                System GMM: <span class="finding-stat">-1.2pp</span> promedio
+                            </div>
+                            <div class="finding-item">
+                                DiD específicos: <span class="finding-stat">-13.3pp a -16.5pp</span>
+                            </div>
+                            <div class="finding-item">
+                                Concentrado en <span class="finding-stat">Antofagasta</span> (hasta -20.9pp)
+                            </div>
+                            <div class="finding-item">
+                                Sede Coquimbo: <span class="finding-stat">sin efectos significativos</span>
+                            </div>
+                        </div>
+
+
+                        <div class="magnitude-bar">
+                            <div class="magnitude-label">Magnitud del efecto negativo máximo</div>
+                            <div class="bar-container">
+                                <div class="bar-fill negative" style="width: 85%;"></div>
+                            </div>
+                            <div class="magnitude-value">-20.9pp en Antofagasta (períodos tardíos)</div>
+                        </div>
+
+                        <div class="recommendations-section">
+                            <div class="recommendations-label">
+                                <span class="arrow-down">↓</span>
+                                <span>INFORMA A</span>
+                            </div>
+                            <div class="rec-link" data-target="r2">
+                                <span class="rec-arrow">→</span>
+                                <span>Recomendación 2: Mecanismos causales</span>
+                            </div>
+                            <div class="rec-link" data-target="r3">
+                                <span class="rec-arrow">→</span>
+                                <span>Recomendación 3: Heterogeneidad territorial</span>
+                            </div>
+                            <div class="rec-link" data-target="r4">
+                                <span class="rec-arrow">→</span>
+                                <span>Recomendación 4: Heterogeneidad disciplinar</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card OE2 -->
+                    <div class="hypothesis-card rejected-neutral">
+                        <div class="hypothesis-header">
+                            <div class="hypothesis-title">OE2: Titulación Oportuna</div>
+                            <div class="hypothesis-statement">H2: Los beneficiarios presentan progresión curricular más lenta (menor titulación oportuna)</div>
+                            <div class="hypothesis-result rejected">
+                                <span class="hypothesis-icon">≈</span>
+                                <span>RECHAZADA</span>
+                            </div>
+                        </div>
+
+                        <div class="findings-section">
+                            <div class="findings-label">Hallazgos clave</div>
+                            <div class="finding-item">
+                                Tiempo absoluto: <span class="finding-stat">+0.65 semestres</span> (efecto pequeño: d=0.26)
+                            </div>
+                            <div class="finding-item">
+                                Sobrecarrera positiva: <span class="finding-stat">1.38 vs 1.37 semestres</span> (equivalente)
+                            </div>
+                            <div class="finding-item">
+                                Titulación oportuna: <span class="finding-stat">77.9% vs 78.5%</span> (h=-0.015)
+                            </div>
+                            <div class="finding-item">
+                                Resultado: <span class="finding-stat">Equivalencia práctica</span>
+                            </div>
+                        </div>
+
+                        <div class="magnitude-bar">
+                            <div class="magnitude-label">Diferencia en titulación oportuna</div>
+                            <div class="bar-container">
+                                <div class="bar-fill neutral" style="width: 2%;"></div>
+                            </div>
+                            <div class="magnitude-value">-0.6pp (magnitud marginal: h=-0.015)</div>
+                        </div>
+
+                        <div class="recommendations-section">
+                            <div class="recommendations-label">
+                                <span class="arrow-down">↓</span>
+                                <span>INFORMA A</span>
+                            </div>
+                            <div class="rec-link" data-target="r1">
+                                <span class="rec-arrow">→</span>
+                                <span>Recomendación 1: Monitoreo de eficiencia</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card OE3 -->
+                    <div class="hypothesis-card rejected-positive">
+                        <div class="hypothesis-header">
+                            <div class="hypothesis-title">OE3: Retención Estudiantil</div>
+                            <div class="hypothesis-statement">H3: Los beneficiarios presentan menor retención que los no beneficiarios</div>
+                            <div class="hypothesis-result rejected-positive">
+                                <span class="hypothesis-icon">✓</span>
+                                <span>RECHAZADA (Efecto opuesto)</span>
+                            </div>
+                        </div>
+
+                        <div class="findings-section">
+                            <div class="findings-label">Hallazgos clave</div>
+                            <div class="finding-item">
+                                Probabilidad de permanencia: <span class="finding-stat">+5.81pp</span>
+                            </div>
+                            <div class="finding-item">
+                                Determinante de <span class="finding-stat">mayor magnitud</span> identificado
+                            </div>
+                            <div class="finding-item">
+                                Supera efecto PPA: <span class="finding-stat">+1.04pp por unidad</span>
+                            </div>
+                            <div class="finding-item">
+                                Compensa riesgo STEM: <span class="finding-stat">+5.81pp vs -3.63pp</span>
+                            </div>
+                        </div>
+
+                        <div class="magnitude-bar">
+                            <div class="magnitude-label">Incremento en probabilidad de permanencia</div>
+                            <div class="bar-container">
+                                <div class="bar-fill positive" style="width: 75%;"></div>
+                            </div>
+                            <div class="magnitude-value">+5.81pp (p<0.001, efecto protector robusto)</div>
+                        </div>
+
+                        <div class="recommendations-section">
+                            <div class="recommendations-label">
+                                <span class="arrow-down">↓</span>
+                                <span>INFORMA A</span>
+                            </div>
+                            <div class="rec-link" data-target="r1">
+                                <span class="rec-arrow">→</span>
+                                <span>Recomendación 1: Monitoreo de eficiencia</span>
+                            </div>
+                            <div class="rec-link" data-target="r4">
+                                <span class="rec-arrow">→</span>
+                                <span>Recomendación 4: Heterogeneidad disciplinar</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="evidence-box" style="margin-top: 3rem;">
+                    <div class="evidence-title">Síntesis integradora</div>
+                    <div class="evidence-item">
+                        La política de gratuidad genera una <strong>dinámica de compensación</strong>: el menor rendimiento semestral (H1 confirmada) es absorbido por el sistema mediante mayor retención (H3 con efecto opuesto positivo), resultando en equivalencia práctica en titulación oportuna (H2 rechazada).
+                    </div>
+                    <div class="evidence-item">
+                        Los efectos son <strong>heterogéneos</strong>: concentrados territorialmente en Antofagasta, comparables por disciplina, y con patrones diferenciados pero no concluyentes por género.
+                    </div>
+                    <div class="evidence-item">
+                        La política cumple su <strong>función de equidad</strong> sin comprometer eficiencia terminal, aunque genera tensiones en rendimiento semestral que requieren comprensión de mecanismos causales para diseñar intervenciones efectivas.
+                    </div>
+                </div>
+            </div>
+
+            <!-- R2 -->
+            <div class="content-section" id="r2">
+                <h3>Recomendación 2: Profundizar en mecanismos causales</h3>
+                <div class="timeline-badge mediano">Mediano Plazo</div>
+                
+                <div class="recommendation-text">
+                    <p>El hallazgo central de esta investigación, que los beneficiarios de gratuidad presentan tasas de aprobación semestral inferiores en la sede Antofagasta, plantea una pregunta que los datos institucionales disponibles no permiten responder: ¿por qué? Las estimaciones econométricas cuantifican la magnitud de la asociación, pero la información administrativa de la UCN no contiene variables que permitan discriminar entre explicaciones alternativas.</p>
+
+                    <p>Los beneficiarios de gratuidad podrían estar compatibilizando trabajo y estudios con mayor intensidad que los no beneficiarios, lo que reduciría el tiempo disponible para actividades académicas. Alternativamente, podrían provenir de establecimientos de educación media con menor calidad educativa, generando brechas de capital académico que se manifiestan en el rendimiento universitario. También es posible que existan diferencias en estrategias de estudio, en redes de apoyo académico informales, o en expectativas sobre la intensidad académica sostenible.</p>
+                </div>
+
+                <div class="evidence-box">
+                    <div class="evidence-title">Evidencia empírica vinculada</div>
+                    <div class="evidence-item">
+                        Efecto concentrado en Antofagasta: <span class="stat">-20.9pp<span class="tooltip">Reducción máxima en período t=4 post-tratamiento. Event study con Callaway & Sant'Anna (2021).</span></span> en períodos tardíos
+                    </div>
+                    <div class="evidence-item">
+                        Sede Coquimbo: <span class="stat">0pp<span class="tooltip">No se registran efectos estadísticamente significativos en ningún período post-tratamiento. Sugiere factores protectores específicos de esta sede.</span></span> (sin efectos significativos)
+                    </div>
+                    <div class="evidence-item">
+                        Puntajes de admisión matemáticas: <span class="stat">no significativos<span class="tooltip">β = -0.00002, p > 0.10 en modelo Probit Ordinal de retención. Sugiere limitaciones de instrumentos de selección actuales.</span></span> en predicción de retención <span class="limitation-badge">Limitación identificada</span>
+                    </div>
+                </div>
+
+                <div class="recommendation-text">
+                    <p><strong>Acción sugerida:</strong> Diseñar estudio complementario que incorpore información primaria sobre cuatro dimensiones clave. Primero, horas semanales dedicadas a trabajo remunerado durante el período académico. Segundo, características del establecimiento de educación media de egreso; si bien la UCN dispone de información sobre tipo de dependencia, puntaje promedio PSU/PAES del establecimiento e índice de vulnerabilidad escolar en distintas fuentes administrativas, esta información no está actualmente integrada en una base de datos unificada que permita análisis sistemáticos a nivel de estudiante. Tercero, condiciones de estudio en el hogar. Cuarto, uso efectivo de servicios de apoyo académico institucional.</p>
+                </div>
+            </div>
+
+            <!-- R3 -->
+            <div class="content-section" id="r3">
+                <h3>Recomendación 3: Comprender heterogeneidad territorial</h3>
+                <div class="timeline-badge mediano">Mediano Plazo</div>
+                
+                <div class="recommendation-text">
+                    <p>La concentración geográfica del efecto negativo sobre rendimiento académico constituye el hallazgo de heterogeneidad más robusto de esta investigación. Esta divergencia no puede atribuirse a diferencias en la composición disciplinar de la oferta académica, dado que el análisis desagregado por carreras STEM muestra efectos negativos de magnitud comparable al agregado institucional.</p>
+
+                    <p>Este hallazgo plantea dos preguntas complementarias que requieren investigación adicional. Primero, ¿qué factores específicos en Antofagasta están mediando el efecto negativo de la gratuidad sobre el rendimiento? Segundo, y quizás más importante desde una perspectiva de gestión institucional, ¿qué está ocurriendo en Coquimbo que permite que los beneficiarios de gratuidad mantengan tasas de aprobación comparables a los no beneficiarios?</p>
+                </div>
+
+                <div class="evidence-box">
+                    <div class="evidence-title">Evidencia empírica vinculada</div>
+                    <div class="evidence-item">
+                        <span class="evidence-level">Antofagasta</span>
+                        Reducciones entre <span class="stat">-13.9pp y -20.9pp<span class="tooltip">Efectos significativos en t=3 (-20.5pp), t=4 (-20.9pp) y t=6 (-13.9pp). Validación de tendencias paralelas con limitación en t=-2.</span></span> en períodos medios y tardíos
+                    </div>
+                    <div class="evidence-item">
+                        <span class="evidence-level">Coquimbo</span>
+                        <span class="stat">Sin efectos detectables<span class="tooltip">Ningún coeficiente post-tratamiento alcanza significancia estadística. Los intervalos de confianza cruzan sistemáticamente cero.</span></span> en toda la trayectoria post-tratamiento
+                    </div>
+                    <div class="evidence-item">
+                        STEM: efectos de <span class="stat">-15.1pp a -17.5pp<span class="tooltip">Magnitud comparable al agregado institucional, descarta amplificación por exigencia disciplinar.</span></span>, comparables al agregado
+                    </div>
+                </div>
+
+                <div class="recommendation-text">
+                    <p><strong>Acción sugerida:</strong> Abordar esta heterogeneidad territorial desde una perspectiva comparativa que valore tanto la comprensión de los desafíos específicos de Antofagasta como el aprendizaje desde las condiciones que parecen estar operando favorablemente en Coquimbo. Identificar factores protectores presentes en Coquimbo (prácticas docentes específicas, estructuras de apoyo académico, características de la oferta académica, o atributos de la composición estudiantil) podría informar intervenciones replicables.</p>
+                </div>
+            </div>
+
+            <!-- R1 -->
+            <div class="content-section" id="r1">
+                <h3>Recomendación 1: Monitorear eficiencia de trayectorias</h3>
+                <div class="timeline-badge corto">Corto Plazo</div>
+                
+                <div class="recommendation-text">
+                    <p>Si bien la investigación concluye que la política de gratuidad no compromete la titulación oportuna a nivel agregado, esta equivalencia en el resultado final enmascara una dinámica de compensación en la que el menor rendimiento semestral es absorbido por el sistema gracias a una mayor retención. Los beneficiarios aprueban menor proporción de créditos por período pero permanecen más tiempo en la institución, logrando completar sus programas en plazos comparables.</p>
+
+                    <p>El tiempo adicional en la universidad, aunque no exceda la ventana de tolerancia institucional para la titulación oportuna, representa costos de oportunidad para los estudiantes: ingresos laborales diferidos, mayor duración del período de estudios sin generación de ingresos, y potencialmente mayor carga financiera si existen gastos asociados a la permanencia prolongada.</p>
+                </div>
+
+                <div class="evidence-box">
+                    <div class="evidence-title">Evidencia empírica vinculada</div>
+                    <div class="evidence-item">
+                        Tiempo a titulación: diferencia de <span class="stat">+0.65 semestres<span class="tooltip">Test t de Welch, p<0.001. Tamaño de efecto d de Cohen = 0.26 (pequeño). Equivalente a ~3 meses adicionales.</span></span> (tamaño de efecto pequeño: d=0.26)
+                    </div>
+                    <div class="evidence-item">
+                        Sobrecarrera positiva: <span class="stat">1.38 vs 1.37 semestres<span class="tooltip">Promedios prácticamente idénticos (p=0.833, d=0.007). No hay diferencias en exceso de duración cuando este ocurre.</span></span> (equivalencia práctica)
+                    </div>
+                    <div class="evidence-item">
+                        Titulación oportuna: <span class="stat">77.9% vs 78.5%<span class="tooltip">χ²(1)=0.18, p=0.669. h de Cohen=-0.015 (magnitud marginal). La ventana institucional (duración teórica + 1 año) absorbe diferencias.</span></span> (magnitud marginal: h=-0.015)
+                    </div>
+                    <div class="evidence-item">
+                        Retención: <span class="stat">+5.81pp<span class="tooltip">Mayor probabilidad de permanencia (p<0.001) explica cómo menor rendimiento semestral coexiste con titulación oportuna equivalente.</span></span> mayor probabilidad de permanencia compensa menor rendimiento semestral
+                    </div>
+                </div>
+
+                <div class="recommendation-text">
+                    <p><strong>Acción sugerida:</strong> Establecer un sistema de monitoreo regular de la eficiencia de las trayectorias académicas desagregado por condición de beneficiario, sede, disciplina y otras características relevantes. Complementar con estudios de seguimiento que cuantifiquen los costos privados asociados a las trayectorias extendidas. La distinción es relevante desde una perspectiva de equidad: si los beneficiarios están extendiendo sus trayectorias como consecuencia de restricciones evitables, la institución tiene margen para intervenir; si la extensión responde a decisiones informadas de balance trabajo-estudio, el rol institucional debería enfocarse en facilitar estas trayectorias no tradicionales.</p>
+                </div>
+            </div>
+
+            <!-- R4 -->
+            <div class="content-section" id="r4">
+                <h3>Recomendación 4: Considerar heterogeneidad disciplinar y demográfica</h3>
+                <div class="timeline-badge largo">Largo Plazo</div>
+                
+                <div class="recommendation-text">
+                    <p>El análisis de heterogeneidad identifica segmentos de la población estudiantil en los cuales el impacto de la gratuidad sobre el rendimiento académico presenta características diferenciadas. Las carreras STEM, aunque presentan efectos negativos de magnitud comparable al agregado institucional, merecen atención particular dado que estos estudiantes ya enfrentan tasas de deserción estructuralmente más elevadas.</p>
+
+                    <p>Los resultados desagregados por género sugieren que los estudiantes hombres experimentan efectos negativos más consistentes que las mujeres, aunque las limitaciones metodológicas en la validación de tendencias paralelas para estos subgrupos introducen cautela interpretativa.</p>
+                </div>
+
+                <div class="evidence-box">
+                    <div class="evidence-title">Evidencia empírica vinculada</div>
+                    <div class="evidence-item">
+                        <span class="evidence-level">STEM</span>
+                        Rendimiento: <span class="stat">-15.1pp a -17.5pp<span class="tooltip">Efectos en t=1 (-15.1pp), t=3 (-17.5pp) y t=6 (-15.5pp). Magnitud comparable al agregado, no hay amplificación.</span></span> (comparable al agregado)
+                    </div>
+                    <div class="evidence-item">
+                        <span class="evidence-level">STEM</span>
+                        Deserción estructural: <span class="stat">-3.63pp<span class="tooltip">Modelo Probit Ordinal. Matrícula en STEM reduce probabilidad de permanencia en 3.63pp (p<0.001).</span></span> de reducción en permanencia
+                    </div>
+                    <div class="evidence-item">
+                        Gratuidad compensa riesgo STEM: <span class="stat">+5.81pp vs -3.63pp<span class="tooltip">El efecto protector de la gratuidad (5.81pp) supera el riesgo STEM (3.63pp), pero el balance podría ser frágil.</span></span> (balance positivo pero frágil)
+                    </div>
+                    <div class="evidence-item">
+                        Género: hombres <span class="stat">-15.8pp a -17.9pp<span class="tooltip">Efectos más consistentes en hombres, pero limitaciones en validación de tendencias paralelas (diferencia significativa en t=-3).</span></span>, mujeres efecto único en t=2 <span class="limitation-badge">Evidencia sugestiva</span>
+                    </div>
+                </div>
+
+                <div class="recommendation-text">
+                    <p><strong>Acción sugerida:</strong> Priorizar las dimensiones de heterogeneidad donde la evidencia es más robusta: sede (Antofagasta versus Coquimbo) y, en menor medida, disciplina (STEM). No diseñar intervenciones específicas por género hasta que estudios adicionales con mayor poder estadístico y ventanas temporales más extensas permitan validar o descartar este patrón. Intervenciones genéricas aplicadas uniformemente corren el riesgo de diluir recursos en segmentos donde el impacto no genera tensiones detectables.</p>
+                </div>
+            </div>
+
+            <!-- Final -->
+            <div class="content-section" id="final">
+                <h3>Consideraciones finales</h3>
+                
+                <div class="recommendation-text">
+                    <p>Las recomendaciones presentadas priorizan la generación de conocimiento adicional sobre los mecanismos causales que subyacen a las asociaciones identificadas, antes que la implementación inmediata de intervenciones específicas. Esta priorización responde al reconocimiento de que las políticas de apoyo académico son más efectivas cuando se diseñan sobre la base de evidencia robusta sobre los factores que efectivamente median los resultados observados.</p>
+
+                    <p>La política de gratuidad universitaria cumple su función primaria de equidad en el acceso y la permanencia, como lo demuestra el robusto efecto protector sobre la retención estimado en esta investigación. Las tensiones identificadas en el rendimiento académico semestral no comprometen la eficiencia terminal medida por titulación oportuna, lo que indica que el sistema está absorbiendo estas tensiones sin deterioro en los resultados finales.</p>
+
+                    <p>Sin embargo, la existencia de una dinámica de compensación en la que menor rendimiento por período coexiste con mayor permanencia sugiere que existen oportunidades de mejora en la eficiencia de las trayectorias individuales. La identificación de estas oportunidades requiere comprensión profunda de los mecanismos causales, comprensión que la presente investigación no puede proveer con la información administrativa disponible pero que constituye el siguiente paso natural en la agenda de investigación institucional sobre el impacto de la gratuidad en la UCN.</p>
+                </div>
+
+                <div class="evidence-box">
+                    <div class="evidence-title">Síntesis de hallazgos clave</div>
+                    <div class="evidence-item">
+                        ✓ La gratuidad fortalece la retención (<span class="stat">+5.81pp</span>)
+                    </div>
+                    <div class="evidence-item">
+                        ✓ No compromete titulación oportuna (77.9% vs 78.5%)
+                    </div>
+                    <div class="evidence-item">
+                        ⚠ Reduce rendimiento semestral en contextos específicos (Antofagasta: hasta -20.9pp)
+                    </div>
+                    <div class="evidence-item">
+                        → Dinámica de compensación: menor rendimiento + mayor retención = titulación equivalente
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation functionality
+        const navItems = document.querySelectorAll('.nav-item');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const sectionId = item.getAttribute('data-section');
+                
+                // Update active nav item
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+                
+                // Update active content section
+                contentSections.forEach(section => section.classList.remove('active'));
+                document.getElementById(sectionId).classList.add('active');
+                
+                // Scroll content to top
+                document.querySelector('.content').scrollTop = 0;
+            });
+        });
+
+        // Recommendation links functionality
+        const recLinks = document.querySelectorAll('.rec-link');
+        
+        recLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                const targetSection = link.getAttribute('data-target');
+                
+                // Find and click the corresponding nav item
+                const targetNav = document.querySelector(`.nav-item[data-section="${targetSection}"]`);
+                if (targetNav) {
+                    targetNav.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
